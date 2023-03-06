@@ -1,13 +1,17 @@
 # AdaOS_Assets_test
 
-## コンテナイメージの作成方法
-```
-chmod +x base_assets_build.sh
-./base_assets_build.sh       
+## インストール方法
+```shell
+chmod +x ./scripts/*.sh
+./scripts/setup-env.sh
 ```
 
-## 開発環境コンテナの実行
+## 全部入りコンテナ作成
+```shell
+./scripts/make_container.sh
 ```
-chmod +x run_env.sh
-./run_env.sh
+
+## コンテナ実行
+```shell
+./scripts/launch.sh
 ```

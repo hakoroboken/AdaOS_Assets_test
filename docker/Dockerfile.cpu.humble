@@ -1,4 +1,4 @@
-FROM adaos_user:latest
+FROM adaos-user-cpu:beta
 
 ENV LANG=en_US.UTF-8
 ENV ROS_PYTHON_VERSION=3
@@ -19,8 +19,12 @@ RUN rosdep update
 
 RUN sudo apt install -y ros-humble-rmw-cyclonedds-cpp
 
-RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-RUN echo "export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp" >> ~/.bashrc
+RUN sudo apt install -y net-tools vim git
 
+RUN sudo mkdir /adaos_workspace
 WORKDIR /adaos_workspace
 RUN sudo chmod 777 -R .
+
+RUN sudo mkdir -p /usr/local/bin/scripts
+COPY ./scripts/*entrypoint.sh /usr/local/bin/scripts/
+RUN  sudo chmod +x /usr/local/bin/scripts/*.sh

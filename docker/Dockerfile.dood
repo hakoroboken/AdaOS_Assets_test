@@ -1,4 +1,4 @@
-FROM adaos_user:latest
+FROM adaos-user-cpu:beta
 
 RUN sudo apt-get update
 
