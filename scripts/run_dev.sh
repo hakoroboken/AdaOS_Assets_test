@@ -19,7 +19,6 @@ function print_info {
 }
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source $ROOT/util/print_util.sh
 
 # Build project
 print_info "Start dev container"
