@@ -20,5 +20,5 @@ docker run --rm -it \
     -v /dev/*:/dev/* \
     --workdir /adaos_workspace/ \
     --entrypoint /usr/local/bin/scripts/launch-entrypoint.sh \
-    test:latest \
+    sc3_gw:latest \
     /bin/bash
