@@ -31,6 +31,8 @@ if [ $1 = "-d" ]; then
     mkdir -p $ROOT/${PKG_NAME}_workspace/src
     mkdir -p $ROOT/${PKG_NAME}_workspace/launch
     mkdir -p $ROOT/${PKG_NAME}_workspace/scripts
+elif [ $1 = "-m" ]; then
+    echo "Hello"
 else
     mkdir $ROOT/workdir
     cd $ROOT/workdir
@@ -54,5 +56,9 @@ wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scr
 
 chmod +x $ROOT/${PKG_NAME}_workspace/scripts/*.sh
 
-print_info "$PKG_NAME is created"
+cd $ROOT/${PKG_NAME}_workspace/
 
+touch $ROOT/${PKG_NAME}_workspace/launch/${PKG_NAME}.adaos-exe.py
+chmod +x $ROOT/${PKG_NAME}_workspace/launch/${PKG_NAME}.adaos-exe.py
+
+print_info "$PKG_NAME is created"
