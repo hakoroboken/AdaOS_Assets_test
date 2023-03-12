@@ -19,7 +19,6 @@ function print_info {
 }
 
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source $ROOT/util/print_util.sh
 
 # Check Arg
 if [ $# -eq 0 ]; then
@@ -27,24 +26,35 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-if [ $1 = "-d" -a $# -ge 2]; then
-    PKG_NAME= $2
+if [ $1 = "-d" ]; then
+    PKG_NAME=$2
     mkdir -p ${PKG_NAME}_workspace/src
     mkdir -p ${PKG_NAME}_workspace/launch
     mkdir -p ${PKG_NAME}_workspace/scripts
+else
     exit 1
+
+    mkdir ./workdir
+    cd ./workdir
+    git clone $1
+    cd ..
+
+    PKG_NAME="$(ls ./workdir)"
+    mkdir -p ${PKG_NAME}_workspace/src
+    mkdir -p ${PKG_NAME}_workspace/launch
+    mkdir -p ${PKG_NAME}_workspace/scripts
+
+    cp -r ./workdir/${PKG_NAME} ${PKG_NAME}_workspace/src
+
+    rm -rf ./workdir
 fi
 
-mkdir ./workdir
-cd ./workdir
-git clone $1
-cd ..
+cd ${PKG_NAME}_workspace/scripts
+wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_image.sh
+wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/run_dev.sh
+wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/launch.sh
 
-REPO_NAME="$(ls ./workdir)"
-mkdir -p ${REPO_NAME}_workspace/src
-mkdir -p ${REPO_NAME}_workspace/launch
-mkdir -p ${REPO_NAME}_workspace/scripts
+chmod +x ./scripts/*
 
-cp -r ./workdir/${REPO_NAME} ${REPO_NAME}_workspace/src
+print_info "$PKG_NAME is created"
 
-rm -rf ./workdir
