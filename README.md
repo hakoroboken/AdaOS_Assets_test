@@ -10,17 +10,22 @@ chmod +x ./scripts/*.sh
 ```
 
 ## ワークスペースの作成
-- git レポジトリがある場合
-```shell
+```
 cd <任意の場所>
 wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_ws.sh && chmod +x ./*.sh
+```
+
+- git レポジトリがある場合
+```shell
 ./make_pkg_ws.sh <git_link>
+```
+- 複数 git レポジトリがある場合
+```shell
+./make_pkg_ws.sh <git_link> <git_link> <git_link> <git_link>
 ```
 
 - プロジェクトを自分で追加する場合
 ```shell
-cd <任意の場所>
-wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_ws.sh && chmod +x ./*.sh
 ./make_pkg_ws.sh -d <適当な名前>
 ```
 ワークスペースの中にあるsrcフォルダにプロジェクトを入れる
