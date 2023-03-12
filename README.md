@@ -1,17 +1,40 @@
 # AdaOS_Assets_test
 
-## インストール方法
+## インストール
+ベースのイメージを作成する。
 ```shell
+git clone https://github.com/hakoroboken/AdaOS_Assets_test.git
+cd AdaOS_Assets_test
 chmod +x ./scripts/*.sh
-./scripts/setup-env.sh
+./scripts/make_base_image.sh
 ```
 
-## 全部入りコンテナ作成
+## ワークスペースの作成
+- git レポジトリがある場合
 ```shell
-./scripts/make_container.sh
+cd <任意の場所>
+wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_ws.sh && chmod +x ./*.sh
+./make_pkg_ws.sh <git_link>
 ```
 
-## コンテナ実行
+- プロジェクトを自分で追加する場合
 ```shell
-./scripts/launch.sh
+cd <任意の場所>
+wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_ws.sh && chmod +x ./*.sh
+./make_pkg_ws.sh -d <適当な名前>
+```
+ワークスペースの中にあるsrcフォルダにプロジェクトを入れる
+
+## パッケージ内包コンテナの作成
+```shell
+cd <生成されたワークスペース>
+./scripts/make_pkg_image.sh <コンテナ名>:<タグ名>
+```
+
+## 実行
+
+`launch/<ワークスペース名>.adaos-exe.py`にros launchファイルの内容を書き込む
+
+```shell
+./scripts/launch.sh <コンテナ名>:<タグ名>
 ```
