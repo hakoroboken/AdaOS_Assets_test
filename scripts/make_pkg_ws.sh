@@ -28,33 +28,31 @@ fi
 
 if [ $1 = "-d" ]; then
     PKG_NAME=$2
-    mkdir -p ${PKG_NAME}_workspace/src
-    mkdir -p ${PKG_NAME}_workspace/launch
-    mkdir -p ${PKG_NAME}_workspace/scripts
+    mkdir -p $ROOT/${PKG_NAME}_workspace/src
+    mkdir -p $ROOT/${PKG_NAME}_workspace/launch
+    mkdir -p $ROOT/${PKG_NAME}_workspace/scripts
 else
-    exit 1
-
-    mkdir ./workdir
-    cd ./workdir
+    mkdir $ROOT/workdir
+    cd $ROOT/workdir
     git clone $1
-    cd ..
+    cd $ROOT/
 
-    PKG_NAME="$(ls ./workdir)"
-    mkdir -p ${PKG_NAME}_workspace/src
-    mkdir -p ${PKG_NAME}_workspace/launch
-    mkdir -p ${PKG_NAME}_workspace/scripts
+    PKG_NAME="$(ls $ROOT//workdir)"
+    mkdir -p $ROOT/${PKG_NAME}_workspace/src
+    mkdir -p $ROOT/${PKG_NAME}_workspace/launch
+    mkdir -p $ROOT/${PKG_NAME}_workspace/scripts
 
-    cp -r ./workdir/${PKG_NAME} ${PKG_NAME}_workspace/src
+    cp -r $ROOT/workdir/${PKG_NAME} $ROOT/${PKG_NAME}_workspace/src
 
-    rm -rf ./workdir
+    rm -rf $ROOT/workdir
 fi
 
-cd ${PKG_NAME}_workspace/scripts
-wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_image.sh
+cd $ROOT/${PKG_NAME}_workspace/scripts
+wget -q -nc	https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_image.sh
 wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/run_dev.sh
 wget -q https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/launch.sh
 
-chmod +x ./scripts/*
+chmod +x $ROOT/${PKG_NAME}_workspace/scripts/*.sh
 
 print_info "$PKG_NAME is created"
 
