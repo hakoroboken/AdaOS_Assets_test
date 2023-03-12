@@ -1,16 +1,25 @@
 #!/bin/bash
 
+function print_error {
+    tput setaf 1
+    echo "$1"
+    tput sgr0
+}
+
+function print_warning {
+    tput setaf 3
+    echo "$1"
+    tput sgr0
+}
+
+function print_info {
+    tput setaf 2
+    echo "$1"
+    tput sgr0
+}
+
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source $ROOT/util/print_util.sh
-
-# # Set workspace
-# WORKSPACE_NAME="$ROOT/../adaos_workspace/src"
-# if [ ! -d $WORKSPACE_NAME ]; then
-#     print_error "Project Not found."
-#     print_info "Run 'make_project.sh --git <git url>'"
-#     exit 1
-# fi
-
 
 # Build project
 print_info "Start dev container"
@@ -18,7 +27,7 @@ print_info "Start dev container"
 docker run --rm -it \
     --privileged \
     --network host \
-    -v $ROOT/../adaos_workspace/src:/adaos_workspace/src \
+    -v $ROOT/../src:/adaos_workspace/src \
     -v /dev/*:/dev/* \
     --workdir /adaos_workspace/ \
     --entrypoint /usr/local/bin/scripts/dev-entrypoint.sh \
