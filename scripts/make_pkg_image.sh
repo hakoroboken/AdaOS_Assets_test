@@ -1,8 +1,24 @@
 #!/bin/bash
 
+function print_error {
+    tput setaf 1
+    echo "$1"
+    tput sgr0
+}
+
+function print_warning {
+    tput setaf 3
+    echo "$1"
+    tput sgr0
+}
+
+function print_info {
+    tput setaf 2
+    echo "$1"
+    tput sgr0
+}
+
 ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source $ROOT/util/print_util.sh
-DOCKER_DIR="${ROOT}/../docker"
 
 # Check Arg
 if [ $# -eq 0 ]; then
@@ -16,7 +32,7 @@ if [[ ! $1 =~ ":" ]]; then
 fi
 
 # Set workspace
-WORKSPACE_NAME="$ROOT/../adaos_workspace/src"
+WORKSPACE_NAME="$ROOT/../src"
 if [ ! -d $WORKSPACE_NAME ]; then
     print_error "Project Not found."
     print_error "Run 'make_project.sh --git <git url>'"
@@ -30,7 +46,7 @@ print_info "Start project building"
 docker run -it \
     --privileged \
     --network host \
-    -v $ROOT/../adaos_workspace/src:/adaos_workspace/src \
+    -v $ROOT/../src:/adaos_workspace/src \
     -v /dev/*:/dev/* \
     --workdir /adaos_workspace/ \
     --name adaos_build_workspace \
