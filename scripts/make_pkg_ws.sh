@@ -31,8 +31,24 @@ if [ $1 = "-d" ]; then
     mkdir -p $ROOT/${PKG_NAME}_workspace/src
     mkdir -p $ROOT/${PKG_NAME}_workspace/launch
     mkdir -p $ROOT/${PKG_NAME}_workspace/scripts
-elif [ $1 = "-m" ]; then
-    echo "Hello"
+elif [ $# -ne 0 ]; then
+    mkdir $ROOT/workdir
+    cd $ROOT/workdir
+    git clone $1
+    cd $ROOT/
+    PKG_NAME="$(ls $ROOT//workdir)"
+    rm -rf $ROOT/workdir
+
+    mkdir -p $ROOT/${PKG_NAME}_workspace/src
+    mkdir -p $ROOT/${PKG_NAME}_workspace/launch
+    mkdir -p $ROOT/${PKG_NAME}_workspace/scripts
+
+    cd $ROOT/${PKG_NAME}_workspace/src
+
+    for arg in "$@"
+    do
+        git clone ${arg}
+    done
 else
     mkdir $ROOT/workdir
     cd $ROOT/workdir
@@ -48,6 +64,7 @@ else
 
     rm -rf $ROOT/workdir
 fi
+
 
 cd $ROOT/${PKG_NAME}_workspace/scripts
 wget -q -nc	https://raw.githubusercontent.com/hakoroboken/AdaOS_Assets_test/main/scripts/make_pkg_image.sh
